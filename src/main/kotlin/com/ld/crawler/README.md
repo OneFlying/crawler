@@ -1,0 +1,1 @@
+@Configuration 放到根目录下
