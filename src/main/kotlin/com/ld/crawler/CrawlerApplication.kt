@@ -5,12 +5,14 @@ import org.mybatis.spring.annotation.MapperScan
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.jdbc.DataSourceAutoConfiguration
 import org.springframework.boot.runApplication
+import org.springframework.transaction.annotation.EnableTransactionManagement
 
-@EnableMongoPlus
 @SpringBootApplication(exclude = [
     DataSourceAutoConfiguration::class
 ])
 @MapperScan("com.ld.crawler")
+@EnableMongoPlus
+@EnableTransactionManagement
 class CrawlerApplication
 
     fun main(args: Array<String>) {

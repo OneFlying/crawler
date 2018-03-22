@@ -3,6 +3,7 @@ package com.ld.crawler.services.impl
 import com.ld.crawler.domain.User
 import com.ld.crawler.domain.UserMapper
 import com.ld.crawler.services.IUserService
+import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
 import javax.annotation.Resource
 
@@ -14,7 +15,7 @@ import javax.annotation.Resource
 @Service
 class UserServiceImpl: IUserService {
 
-    @Resource
+    @Autowired
     lateinit var userMapper: UserMapper
 
     override fun findByName(name: String): User {
