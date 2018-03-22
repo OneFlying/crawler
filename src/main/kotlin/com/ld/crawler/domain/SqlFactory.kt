@@ -13,6 +13,8 @@ class SqlFactory
         println(para["bean"])
         val sql = SQL()
         sql.INSERT_INTO("user")
-
+        for ((k, v) in para) {
+            //
+        }
         return sql.toString()
     }
