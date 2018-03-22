@@ -5,7 +5,6 @@ import com.ld.crawler.domain.UserMapper
 import com.ld.crawler.services.IUserService
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.stereotype.Service
-import javax.annotation.Resource
 
 /**
  * 用户
