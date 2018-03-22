@@ -1,12 +1,15 @@
 package com.ld.crawler.domain
 
 import org.apache.ibatis.annotations.*
+import org.springframework.context.annotation.ComponentScan
+import org.springframework.stereotype.Repository
 
 /**
  * 用户
  * @author Paytham (<a href="mailto:caiyuhao2015@gmail.com">caiyuhao2015@gmail.com</a>)
  * 2018/03/22 14:54
  */
+
 @Mapper
 interface UserMapper {
 
