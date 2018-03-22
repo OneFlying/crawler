@@ -8,5 +8,12 @@
 ## 特性
 - 多网站支持
 
+## 贡献者
+- [dzfking007](https://github.com/dzfking007)
+- [gaoqijun](https://github.com/gaoqijun)
+- [hotlove](https://github.com/hotlove)
+- [JasonGaoG](https://github.com/JasonGaoG)
+- [Paytham](https://github.com/paytham)
+
 ## 开源协议
 [MIT LICENSE](https://github.com/OneFlying/crawler/blob/master/LICENSE)
