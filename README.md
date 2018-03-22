@@ -7,3 +7,6 @@
   
 ## 特性
 - 多网站支持
+
+## 开源协议
+[MIT LICENSE](https://github.com/OneFlying/crawler/blob/master/LICENSE)
