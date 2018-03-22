@@ -4,7 +4,6 @@ import lombok.AllArgsConstructor
 import lombok.Data
 import lombok.NoArgsConstructor
 import org.springframework.data.mongodb.core.mapping.Document
-import reactor.util.annotation.Nullable
 import java.util.*
 
 /**
@@ -21,5 +20,5 @@ data class User constructor(
         private var pwd: String,
         private var mobile: String,
         private var createdAt: Date,
-        @Nullable private var modifiedAt: Date
+        private var modifiedAt: Date
 )
