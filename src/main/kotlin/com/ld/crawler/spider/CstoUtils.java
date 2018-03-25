@@ -22,7 +22,7 @@ import java.util.List;
  */
 @Slf4j
 public class CstoUtils {
-	public static List<PrjInfo> crawPrjinfo() throws IOException{
+	public static List<PrjInfo> crawPrjinfo() throws IOException {
 		List<PrjInfo> list = null;
 		Document doc = Jsoup.connect("http://www.csto.com/project/list").get();
 		log.info(doc.title());
