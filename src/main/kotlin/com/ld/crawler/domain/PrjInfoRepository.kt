@@ -1,6 +1,6 @@
 package com.ld.crawler.domain
 
-import com.ld.crawler.dto.PrjInfo
+import com.ld.crawler.domain.pojo.PrjInfo
 import org.springframework.data.mongodb.repository.MongoRepository
 
 /**
