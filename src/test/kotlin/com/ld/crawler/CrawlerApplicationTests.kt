@@ -4,6 +4,7 @@ import com.ld.crawler.domain.PrjInfoRepository
 import com.ld.crawler.domain.pojo.User
 import com.ld.crawler.domain.UserRepository
 import com.ld.crawler.spider.CstoUtils
+import com.ld.crawler.spider.EpwkUtils
 import com.ld.crawler.spider.SxsoftUtils
 import lombok.extern.slf4j.Slf4j
 import org.junit.Test
@@ -23,7 +24,7 @@ class CrawlerApplicationTests {
     @Autowired
     lateinit var prjInfoRepository : PrjInfoRepository
 
-	@Test
+	// @Test
 	fun contextLoads() {
         userRepository.insert(User("paytham", "123456", "18755133595", Date(), Date()))
         println(userRepository.findByName("paytham"))
@@ -57,4 +58,18 @@ class CrawlerApplicationTests {
         }
     }
 
+    @Test
+    fun crawlerEpwk(){
+        var list = EpwkUtils.crawPrjinfo();
+        if(list!=null){
+            try{
+                prjInfoRepository.insert(list);
+            }catch (e: DuplicateKeyException){
+                println(e.message)
+//                log.in
+            }
+
+
+        }
+    }
 }
