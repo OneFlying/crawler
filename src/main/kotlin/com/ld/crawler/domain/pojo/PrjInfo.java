@@ -1,6 +1,7 @@
 package com.ld.crawler.domain.pojo;
 
 import lombok.*;
+import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
 /**
@@ -14,8 +15,9 @@ import org.springframework.data.mongodb.core.mapping.Document;
 @Document(collection = "prjInfo")
 public class PrjInfo {
     /**
-     * 标题
+     * 标题 主键
      */
+    @Id
     private String title;
     /**
      * 发布时间
@@ -33,4 +35,13 @@ public class PrjInfo {
      * 项目地址
      */
     private String url;
+    /**
+     * html内容
+     */
+    private String html;
+
+    /**
+     * 数据源
+     */
+    private String source;
 }

@@ -1,6 +1,7 @@
 package com.ld.crawler.spider;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ld.crawler.constant.DataSource;
 import com.ld.crawler.domain.pojo.PrjInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -49,15 +50,36 @@ public class CstoUtils {
 				if(contentElement!=null) {
 					prjInfo.setContent(contentElement.text());
 				}
+
+				prjInfo.setSource(DataSource.CSTO);
 				list.add(prjInfo);
 				log.info(JSONObject.toJSONString(prjInfo));
 			}
 		}
 		return list;
 	}
+
+	/**
+	 * 获取内容简介 和保存html内容
+	 * @param url
+	 * @return
+	 * @throws IOException
+	 */
+	public static void crawContentHtml(String url,PrjInfo prjInfo) throws IOException {
+		Document doc = Jsoup.connect(url).get();
+		if(doc!=null){
+			prjInfo.setHtml(doc.html());
+			Element contentElement = doc.selectFirst(".content div");
+			if(contentElement!=null){
+				String content = contentElement.html();
+				prjInfo.setContent(content);
+			}
+		}
+
+	}
 	
 	
-	public static void main(String args[]) throws IOException {
+	public static void main(String[] args) throws IOException {
 		crawPrjinfo();
 		
 	}
