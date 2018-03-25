@@ -1,4 +1,4 @@
-package com.ld.crawler.dto;
+package com.ld.crawler.domain.pojo;
 
 import lombok.*;
 import org.springframework.data.mongodb.core.mapping.Document;

@@ -1,4 +1,4 @@
-package com.ld.crawler.dto
+package com.ld.crawler.domain.pojo
 
 import lombok.AllArgsConstructor
 import lombok.Data

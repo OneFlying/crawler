@@ -1,9 +1,8 @@
 package com.ld.crawler
 
 import com.ld.crawler.domain.PrjInfoRepository
-import com.ld.crawler.dto.User
+import com.ld.crawler.domain.pojo.User
 import com.ld.crawler.domain.UserRepository
-import com.ld.crawler.dto.PrjInfo
 import com.ld.crawler.spider.CstoUtils
 import org.junit.Test
 import org.junit.runner.RunWith

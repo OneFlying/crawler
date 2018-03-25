@@ -1,7 +1,7 @@
 package com.ld.crawler.spider;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ld.crawler.dto.PrjInfo;
+import com.ld.crawler.domain.pojo.PrjInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
