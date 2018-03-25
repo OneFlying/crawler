@@ -1,60 +1,214 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<configuration debug="false">
-    <!--定义日志文件的存储地址 勿在 LogBack 的配置中使用相对路径-->
-    <property name="LOG_HOME" value="log" />
-    <!-- 控制台输出 -->
-    <appender name="STDOUT" class="ch.qos.logback.core.ConsoleAppender">
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %caller{1} %-5level - %msg%n</pattern>
+<configuration scan="true" scanPeriod="10 seconds" debug="false">
+
+    <!--打印logback初始化日志系统信息，debug="true"是同等效果-->
+    <!--<statusListener class="ch.qos.logback.core.status.OnConsoleStatusListener"/>-->
+
+    <!-- 将日志输出在当前项目的根目录下 -->
+    <property name="contextPath" value="log"/>
+    <!-- 日志的上下文路径 -->
+    <property name="logPath" value="${contextPath}"/>
+    <!-- 配置日志的滚动时间 -->
+    <property name="maxHistory" value="90"/>
+
+    <!-- 打印日志到控制台 -->
+    <appender name="rootConsole" class="ch.qos.logback.core.ConsoleAppender">
+        <!-- encoder 在控制台打印日志的格式 -->
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
         </encoder>
     </appender>
-    <!-- 按照每天生成日志文件 -->
-    <appender name="FILE"  class="ch.qos.logback.core.rolling.RollingFileAppender">
+
+    <!--
+    	定义日志的输出方式:输出在文件夹debug/debug.log文件中
+    	配置所有类所有级别的滚动日志
+    -->
+    <appender name="rootRollingDebug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/debug/debug.log</file>
+
         <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
-            <!--日志文件输出的文件名-->
-            <FileNamePattern>${LOG_HOME}/crawler.log.%d{yyyy-MM-dd}.log</FileNamePattern>
-            <!--日志文件保留天数-->
-            <MaxHistory>30</MaxHistory>
+            <fileNamePattern>${logPath}/debug/debug.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 设置日志的滚动时间 -->
+            <maxHistory>${maxHistory}</maxHistory>
         </rollingPolicy>
-        <encoder class="ch.qos.logback.classic.encoder.PatternLayoutEncoder">
-            <!--格式化输出：%d表示日期，%thread表示线程名，%-5level：级别从左显示5个字符宽度%msg：日志消息，%n是换行符-->
-            <pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %caller{1} %-5level - %msg%n</pattern>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+            <charset>UTF-8</charset>
         </encoder>
-        <!--日志文件最大的大小-->
-        <triggeringPolicy class="ch.qos.logback.core.rolling.SizeBasedTriggeringPolicy">
-            <MaxFileSize>10MB</MaxFileSize>
-        </triggeringPolicy>
+
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>DEBUG</level>
+        </filter>
     </appender>
-    <!-- show parameters for hibernate sql 专为 Hibernate 定制 -->
-    <logger name="org.hibernate.type.descriptor.sql.BasicBinder"  level="TRACE" />
-    <logger name="org.hibernate.type.descriptor.sql.BasicExtractor"  level="DEBUG" />
-    <logger name="org.hibernate.SQL" level="DEBUG" />
-    <logger name="org.hibernate.engine.QueryParameters" level="DEBUG" />
-    <logger name="org.hibernate.engine.query.HQLQueryPlan" level="DEBUG" />
 
-    <!--myibatis log configure-->
-    <logger name="com.apache.ibatis" level="TRACE"/>
-    <logger name="java.sql.Connection" level="DEBUG"/>
-    <logger name="java.sql.Statement" level="DEBUG"/>
-    <logger name="java.sql.PreparedStatement" level="DEBUG"/>
+    <!--
+    	定义日志的输出方式:输出在文件夹info/root.log文件中
+    	配置所有类INFO级别的滚动日志
+    -->
+    <appender name="rootRollingInfo" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/info/info.log</file>
 
-    <!-- 日志输出级别 -->
-    <root level="INFO">
-        <appender-ref ref="STDOUT" />
-        <appender-ref ref="FILE" />
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/info/info.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 设置日志的滚动时间 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!--
+        	info/root.log文件中的日志级别是 INFO以上的级别
+         	<filter class="ch.qos.logback.classic.filter.ThresholdFilter"> 和
+         	<filter class="ch.qos.logback.classic.filter.LevelFilter">的区别是什么呢?
+
+         	LevelFilter:严格限制日志的输出级别,使用LevelFilter设置,只会在文件中出现级别为INFO级别的日志内容。
+         -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>INFO</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!--
+    	定义日志的输出方式:输出在文件夹warn/root.log文件中
+    	配置所有类WARN级别的滚动日志
+    -->
+    <appender name="rootRollingWarn" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/warn/warn.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/warn/warn.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 设置日志的滚动时间 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- warn/root.log文件中的日志级别是 WARN以上的级别  -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>WARN</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+    <!--
+    	定义日志的输出方式:输出在文件夹error/root.log文件中
+    	配置所有类ERROR级别的滚动日志
+    -->
+    <appender name="rootRollingError" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/error/error.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/error/error.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 设置日志的滚动时间 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+        <!-- error/root.log文件中的日志级别是 ERROR以上的级别 -->
+        <filter class="ch.qos.logback.classic.filter.LevelFilter">
+            <level>ERROR</level>
+            <onMatch>ACCEPT</onMatch>
+            <onMismatch>DENY</onMismatch>
+        </filter>
+    </appender>
+
+    <!--
+    	定义日志的输出方式:输出在文件夹sql/root.log文件中
+    	配置所有类SQL的日志
+    -->
+    <appender name="rootRollingSql" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/sql/sql.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/sql/sql.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 设置日志的滚动时间 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--
+    	定义日志的输出方式:输出在文件夹business/rootsql.log文件中
+    	打印业务逻辑级别的日志到business文件下
+    -->
+    <appender name="businessRollingDebug" class="ch.qos.logback.core.rolling.RollingFileAppender">
+        <file>${logPath}/business/business.log</file>
+
+        <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+            <fileNamePattern>${logPath}/business/business.%d{yyyy-MM-dd}.log.gz</fileNamePattern>
+            <!-- 设置日志的滚动时间 -->
+            <maxHistory>${maxHistory}</maxHistory>
+        </rollingPolicy>
+        <encoder>
+            <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M - %msg%n</pattern>
+            <charset>UTF-8</charset>
+        </encoder>
+    </appender>
+
+    <!--
+        默认的日志主线程<root>
+        定义输出日志的级别.DEBUG级别
+        下面设置的意思是:会将debug级别的日志输出在一下这五个appender-ref对应的appender上
+     -->
+    <root level="DEBUG">
+        <appender-ref ref="rootConsole"/>
+        <appender-ref ref="rootRollingDebug"/>
     </root>
-    <!--日志异步到数据库 -->
-    <!--<appender name="DB" class="ch.qos.logback.classic.db.DBAppender">-->
-    <!--&lt;!&ndash;日志异步到数据库 &ndash;&gt;-->
-    <!--<connectionSource class="ch.qos.logback.core.db.DriverManagerConnectionSource">-->
-    <!--&lt;!&ndash;连接池 &ndash;&gt;-->
-    <!--<dataSource class="com.mchange.v2.c3p0.ComboPooledDataSource">-->
-    <!--<driverClass>com.mysql.jdbc.Driver</driverClass>-->
-    <!--<url>jdbc:mysql://127.0.0.1:3306/databaseName</url>-->
-    <!--<user>root</user>-->
-    <!--<password>root</password>-->
-    <!--</dataSource>-->
-    <!--</connectionSource>-->
-    <!--</appender>-->
+    <root level="WARN">
+        <appender-ref ref="rootRollingWarn"/>
+    </root>
+    <root level="ERROR">
+        <appender-ref ref="rootRollingError"/>
+    </root>
+    <root level="INFO">
+        <appender-ref ref="rootRollingInfo"/>
+    </root>
+
+    <!--
+        除了使用默认的日志主线程<root>外，还可以通过<logger>标签定制其他日志线程如：
+        其中name指定线程针对的包路径，level是日志级别，<appender-ref>定义使用那种appender。
+     -->
+
+    <!--log4jdbc   begin -->
+
+    <!--
+    	jdbc.sqlonly不显示sql执行的时间
+    	jdbc.sqltiming显示sql执行的时间{executed in 2 msec}
+    	二者使用一个即可-->
+
+    <logger name="jdbc.sqltiming" level="DEBUG"  addtivity="false">
+        <appender-ref ref="rootConsole"/>
+        <appender-ref ref="rootRollingSql"/>
+    </logger>
+
+    <!--<logger name="com.qinban.listener" level="ALL" addtivity="false">
+        <appender-ref ref="rootConsole"/>
+        <appender-ref ref="rootRollingSql"/>
+    </logger>-->
+
+    <!--log4jdbc   end -->
+
+    <!--
+        打印项目中com包下的日志到appender-ref指定的appender中  打印级别是debug
+        这里可以用来专门打印某一类别的日志到某一个特定的文件中.
+        比如:可以打印所有的业务逻辑到业务逻辑文件中;打印所有的controller请求到指定的文件中.
+    -->
+    <logger name="com.ld" level="DEBUG" addtivity="true">
+        <appender-ref ref="businessRollingDebug"/>
+    </logger>
+    <!--
+        打印具体的某个文件中的日志到某个文件夹下.
+        注意:不是打印com.baihui.LogBackTest2文件夹下的日志,而是LogBackTest2文件的日志
+        addtivity="false" 表示打印的日志不向上传递,如果设置成addtivity="true"会怎么样呢?没错,日志打印了两遍
+     -->
+
 </configuration>
