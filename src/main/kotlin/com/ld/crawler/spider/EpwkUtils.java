@@ -27,7 +27,7 @@ public class EpwkUtils {
             log.info(doc.title());
             Element prjLines = doc.selectFirst(".task_class_list_li");
             String pageInfo = doc.selectFirst(".page").text();
-            String pages = pageInfo.substring(pageInfo.indexOf("/"),pageInfo.indexOf("页")).replace(" ","");
+            String pages = pageInfo.substring(pageInfo.indexOf("/")+1,pageInfo.indexOf("页")).replace(" ","");
             int totalPage = Integer.valueOf(pages);
             for(int i=1;i<totalPage;i++){
                 String pageUrl = url + "page"+i+".html";

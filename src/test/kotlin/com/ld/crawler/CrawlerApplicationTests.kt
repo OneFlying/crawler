@@ -24,7 +24,7 @@ class CrawlerApplicationTests {
     @Autowired
     lateinit var prjInfoRepository : PrjInfoRepository
 
-	@Test
+	// @Test
 	fun contextLoads() {
         userRepository.insert(User("paytham", "123456", "18755133595", Date(), Date()))
         println(userRepository.findByName("paytham"))
