@@ -1,17 +1,18 @@
 package com.ld.crawler.spider;
 
-import java.io.IOException;
-import java.util.ArrayList;
-import java.util.List;
-
-import org.apache.log4j.Logger;
+import com.alibaba.fastjson.JSONObject;
+import com.ld.crawler.domain.PrjInfo;
+import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 
-import com.alibaba.fastjson.JSONObject;
-import com.guo.pets.entity.PrjInfo;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
+
 
 
 /**
@@ -19,13 +20,12 @@ import com.guo.pets.entity.PrjInfo;
  * @author dzfking007@163.com
  * CSTO 网站抓取类 
  */
+@Slf4j
 public class CstoUtils {
-	private static Logger logger = Logger.getLogger(CstoUtils.class);
-	
 	public static List<PrjInfo> crawPrjinfo() throws IOException{
 		List<PrjInfo> list = null;
 		Document doc = Jsoup.connect("http://www.csto.com/project/list").get();
-		logger.info(doc.title());
+		log.info(doc.title());
 		Element prjLines = doc.selectFirst("#list_shwores");
 		if(prjLines!=null) {
 			list = new ArrayList<PrjInfo>();
@@ -50,7 +50,7 @@ public class CstoUtils {
 					prjInfo.setContent(contentElement.text());
 				}
 				list.add(prjInfo);
-				logger.info(JSONObject.toJSONString(prjInfo));
+				log.info(JSONObject.toJSONString(prjInfo));
 			}
 		}
 		return list;
