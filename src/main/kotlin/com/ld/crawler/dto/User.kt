@@ -1,4 +1,4 @@
-package com.ld.crawler.domain
+package com.ld.crawler.dto
 
 import lombok.AllArgsConstructor
 import lombok.Data

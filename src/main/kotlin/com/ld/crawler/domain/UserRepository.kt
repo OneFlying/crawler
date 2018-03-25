@@ -1,5 +1,6 @@
 package com.ld.crawler.domain
 
+import com.ld.crawler.dto.User
 import org.springframework.data.mongodb.repository.MongoRepository
 
 /**
