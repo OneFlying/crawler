@@ -67,12 +67,11 @@ public class CstoUtils {
 	 */
 	public static void crawContentHtml(String url,PrjInfo prjInfo) throws IOException {
 		Document doc = Jsoup.connect(url).get();
-		if(doc!=null){
+		if (doc != null) {
 			prjInfo.setHtml(doc.html());
 			Element contentElement = doc.selectFirst(".content div");
-			if(contentElement!=null){
-				String content = contentElement.html();
-				prjInfo.setContent(content);
+			if (contentElement!=null) {
+				prjInfo.setContent(contentElement.html());
 			}
 		}
 
