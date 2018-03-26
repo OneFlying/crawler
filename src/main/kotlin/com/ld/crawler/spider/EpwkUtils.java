@@ -7,11 +7,12 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 
+import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.PrimitiveIterator;
 import java.util.Random;
 
 /**
@@ -19,6 +20,10 @@ import java.util.Random;
  */
 @Slf4j
 public class EpwkUtils {
+
+    @Value("${epwk}")
+    private static String epwk;
+
     public static List<PrjInfo> crawPrjinfo() {
         String url = "http://www.epwk.com/kaifa/task/";
         List<PrjInfo> list = new ArrayList<PrjInfo>();
@@ -76,6 +81,7 @@ public class EpwkUtils {
                         prjInfo.setHtml(details.html());
                         Element content = details.selectFirst(".task-info-content");
                         prjInfo.setContent(content.text());
+                        prjInfo.setSource(epwk);
                     }
                     list.add(prjInfo);
                     log.info(JSONObject.toJSONString(prjInfo));

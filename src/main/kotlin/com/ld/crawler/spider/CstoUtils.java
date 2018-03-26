@@ -1,13 +1,13 @@
 package com.ld.crawler.spider;
 
 import com.alibaba.fastjson.JSONObject;
-import com.ld.crawler.constant.DataSource;
 import com.ld.crawler.domain.pojo.PrjInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 
 
 import java.io.IOException;
@@ -23,6 +23,10 @@ import java.util.List;
  */
 @Slf4j
 public class CstoUtils {
+
+	@Value("${csto}")
+	private static String csto;
+
 	public static List<PrjInfo> crawPrjinfo() throws IOException {
 		List<PrjInfo> list = null;
 		Document doc = Jsoup.connect("http://www.csto.com/project/list").get();
@@ -51,7 +55,7 @@ public class CstoUtils {
 					prjInfo.setContent(contentElement.text());
 				}
 
-				prjInfo.setSource(DataSource.CSTO);
+				prjInfo.setSource(csto);
 				list.add(prjInfo);
 				log.info(JSONObject.toJSONString(prjInfo));
 			}

@@ -1,6 +1,5 @@
 package com.ld.crawler.spider;
 
-import com.ld.crawler.constant.DataSource;
 import com.ld.crawler.domain.pojo.PrjInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Connection;
@@ -8,6 +7,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.util.StringUtils;
 
 import java.io.*;
@@ -26,6 +26,9 @@ public class SxsoftUtils {
     private static Pattern pattern = Pattern.compile("(totalPages : (\\d+),)");
     private static Pattern numberPattern = Pattern.compile("(\\d+)");
     private static String  URL = "https://www.sxsoft.com/page/project/search/0/true";
+
+    @Value("${sxsoft}")
+    private static String sxsoft;
     /**
      * 获取总页数
      */
@@ -95,7 +98,7 @@ public class SxsoftUtils {
                 }
                 //抓取内容简介
                 crawContentHtml(prjInfo.getUrl(),prjInfo);
-                prjInfo.setSource(DataSource.SXSOFT);
+                prjInfo.setSource(sxsoft);
                 list.add(prjInfo);
                 log.info(prjInfo.getTitle());
             }
