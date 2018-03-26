@@ -1,6 +1,7 @@
 package com.ld.crawler.spider;
 
 import com.alibaba.fastjson.JSONObject;
+import com.ld.crawler.constant.DataSource;
 import com.ld.crawler.domain.pojo.PrjInfo;
 import lombok.extern.slf4j.Slf4j;
 import org.jsoup.Jsoup;
@@ -83,6 +84,7 @@ public class EpwkUtils {
                         prjInfo.setContent(content.text());
                         prjInfo.setSource(epwk);
                     }
+                    prjInfo.setSource(DataSource.EPWK);
                     list.add(prjInfo);
                     log.info(JSONObject.toJSONString(prjInfo));
                     Random random = new Random();
