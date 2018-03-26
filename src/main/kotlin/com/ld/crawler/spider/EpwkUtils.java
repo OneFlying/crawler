@@ -9,7 +9,6 @@ import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
 
-import javax.annotation.PostConstruct;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
@@ -30,7 +29,6 @@ public class EpwkUtils {
         try{
             Document doc = Jsoup.connect(url).get();
             log.info(doc.title());
-            Element prjLines = doc.selectFirst(".task_class_list_li");
             String pageInfo = doc.selectFirst(".page").text();
             String pages = pageInfo.substring(pageInfo.indexOf("/")+1,pageInfo.indexOf("页")).replace(" ","");
             int totalPage = Integer.valueOf(pages);
@@ -81,12 +79,12 @@ public class EpwkUtils {
                         prjInfo.setHtml(details.html());
                         Element content = details.selectFirst(".task-info-content");
                         prjInfo.setContent(content.text());
-                        prjInfo.setSource(epwk);
                     }
+                    prjInfo.setSource(epwk);
                     list.add(prjInfo);
                     log.info(JSONObject.toJSONString(prjInfo));
                     Random random = new Random();
-                    int r = (int)random.nextInt(10) + 1;
+                    int r = random.nextInt(10) + 1;
                     Thread.sleep(r * 1000);
                 }
             }
