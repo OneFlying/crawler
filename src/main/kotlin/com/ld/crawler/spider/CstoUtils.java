@@ -8,6 +8,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
 
 
 import java.io.IOException;
@@ -22,10 +23,11 @@ import java.util.List;
  * CSTO 网站抓取类 
  */
 @Slf4j
+@Component
 public class CstoUtils {
 
-	@Value("${csto}")
-	private static String csto;
+	//@Value("${csto}")
+	private static String csto = "CSTO";
 
 	public static List<PrjInfo> crawPrjinfo() throws IOException {
 		List<PrjInfo> list = null;
