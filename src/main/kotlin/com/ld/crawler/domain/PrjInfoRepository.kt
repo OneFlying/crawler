@@ -2,6 +2,7 @@ package com.ld.crawler.domain
 
 import com.ld.crawler.domain.pojo.PrjInfo
 import org.springframework.data.mongodb.repository.MongoRepository
+import org.springframework.stereotype.Repository
 
 /**
  * 项目信息数DAO

@@ -27,8 +27,8 @@ public class SxsoftUtils {
     private static Pattern numberPattern = Pattern.compile("(\\d+)");
     private static String  URL = "https://www.sxsoft.com/page/project/search/0/true";
 
-    @Value("${sxsoft}")
-    private static String sxsoft;
+    //@Value("${sxsoft}")
+    private static String sxsoft = "SXSOFT";
     /**
      * 获取总页数
      */
@@ -92,10 +92,15 @@ public class SxsoftUtils {
                     prjInfo.setTitle(titleElement.text());
                     prjInfo.setUrl(titleElement.absUrl("href"));
                 }
-                Element fabutimeElement = li.selectFirst("div:eq(1)").selectFirst("span:eq(3)").selectFirst("em");
-                if(fabutimeElement!=null) {
-                    prjInfo.setFabutime(fabutimeElement.text());
+                if(li.selectFirst("div:eq(1)")!=null){
+                    if(li.selectFirst("div:eq(1)").selectFirst("span:eq(3)")!=null){
+                        Element fabutimeElement = li.selectFirst("div:eq(1)").selectFirst("span:eq(3)").selectFirst("em");
+                        if(fabutimeElement!=null) {
+                            prjInfo.setFabutime(fabutimeElement.text());
+                        }
+                    }
                 }
+
                 //抓取内容简介
                 crawContentHtml(prjInfo.getUrl(),prjInfo);
                 prjInfo.setSource(sxsoft);
