@@ -1,6 +1,7 @@
 package com.ld.crawler.services;
 
-import com.ld.crawler.domain.pojo.Profile;
+
+import com.Id.crawler.model.Profile;
 
 import java.util.List;
 

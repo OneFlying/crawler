@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE generatorConfiguration PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN" "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd" >
+<generatorConfiguration>
+
+	<classPathEntry location="D:/program_env/maven-repos/repos/mysql/mysql-connector-java/5.1.21/mysql-connector-java-5.1.21.jar" />
+
+	<context id="context1">
+
+		<jdbcConnection driverClass="com.mysql.jdbc.Driver" connectionURL="jdbc:mysql://127.0.0.1:3306/crwler"
+			userId="root" password="root" />
+		<javaModelGenerator targetPackage="com.Id.crawler.model" targetProject="src/main/kotlin">
+		</javaModelGenerator>
+		<sqlMapGenerator targetPackage="com.Id.crawler.dao" targetProject="src/main/resources/mapper" />
+		<javaClientGenerator targetPackage="com.Id.crawler.dao" targetProject="src/main/kotlin" type="XMLMAPPER" />
+        
+        
+        <table tableName="profile" domainObjectName="Profile" alias="PP">
+			<property name="useActualColumnNames" value="false" />
+		</table>
+	</context>
+</generatorConfiguration>

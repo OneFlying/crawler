@@ -17,3 +17,8 @@
 
 ## 开源协议
 [MIT LICENSE](https://github.com/OneFlying/crawler/blob/master/LICENSE)
+
+generator 使用
+在idea 右侧有Maven Projects 项目打开 plugin 中找到generator
+点击运行即可
+在generatorConfig.xml中配置需要逆向生成的表
