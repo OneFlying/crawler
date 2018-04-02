@@ -19,7 +19,6 @@ log/
 
 ### NetBeans ###
 nbproject/private/
-config/
 nbbuild/
 dist/
 nbdist/
