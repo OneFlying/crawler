@@ -1,4 +1,4 @@
-# 上海略鼎网络科技有限公司爬虫项目
+爬虫项目
 基于 Spring + SpringBoot + MyBatis + MongoDB
 
 ## 更新日志
